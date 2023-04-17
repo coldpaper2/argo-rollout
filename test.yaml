@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout 
+metadata:
+  name: canary-test
+spec:
+  replicas: 8
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: canary
+  template:
+    metadata:
+      labels:
+        app: canary
+    spec:
+      containers:
+      - name: canary-test
+        image: mhkim1560/canary-test:v1
+        ports:
+        - containerPort: 80
+  strategy:
+    canary:
+      canaryService: canary-svc
+      stableService: stable-svc
+      trafficRouting:
+        istio: 
+          virtualService:
+            name: canary-virtual-service
+      maxSurge: "25%"    # canary 배포로 생성할 pod의 비율
+      maxUnavailable: 0  
+      steps:
+      - setWeight: 20   
+      - pause: {duration: 20}        
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: canary-svc
+spec:
+  selector:
+    app: canary
+  ports:
+  - protocol: TCP
+    port: 80
+    name: http
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: stable-svc
+spec:
+  selector:
+    app: canary
+  ports:
+  - protocol: TCP
+    port: 80
+    name: http
