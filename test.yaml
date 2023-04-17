@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: canary-test
-        image: mhkim1560/canary-test:v1
+        image: mhkim1560/canary-test:v2
         ports:
         - containerPort: 80
   strategy:
