@@ -14,8 +14,8 @@ spec:
         app: blue
     spec:
       containers:
-      - name: http
-        image: http
+      - name: httpd
+        image: httpd
         ports:
         - containerPort: 80
   strategy:
