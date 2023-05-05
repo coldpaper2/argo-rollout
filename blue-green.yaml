@@ -22,7 +22,7 @@ spec:
     blueGreen: 
       activeService: nginx-svc
       previewService: httpd-svc
-      autoPromotionEnabled: false
+      autoPromotionEnabled: true
 
 ---
 
