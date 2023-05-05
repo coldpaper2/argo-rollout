@@ -17,11 +17,11 @@ spec:
       containers:
       - image: nginx
         name: nginx
-
 ---
 
 apiVersion: v1
 kind: Service
+metadata:
   labels:
     app: blue
   name: blue-svc
