@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: blue
+  name: httpd
 spec:
   replicas: 3
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: blue
+      app: httpd
   template:
     metadata:
       labels:
-        app: blue
+        app: httpd
     spec:
       containers:
       - name: httpd
@@ -20,8 +20,8 @@ spec:
         - containerPort: 80
   strategy:
     blueGreen: 
-      activeService: green-svc
-      previewService: blue-svc
+      activeService: nginx-svc
+      previewService: httpd-svc
       autoPromotionEnabled: false
 
 ---
@@ -30,13 +30,31 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: blue
-  name: green-svc
+    app: httpd
+  name: httpd-svc
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 80
   selector:
-    app: blue
+    app: httpd
 
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx-svc
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
