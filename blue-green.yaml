@@ -14,15 +14,15 @@ spec:
         app: web
     spec:
       containers:
-      - name: nginx
-        image: nginx
+      - name: httpd
+        image: httpd
         ports:
         - containerPort: 80
   strategy:
     blueGreen: 
       activeService: nginx-svc
       previewService: httpd-svc
-      autoPromotionEnabled: true
+      autoPromotionEnabled: false
 
 ---
 
