@@ -40,6 +40,8 @@ metadata:
   labels:
     app: web
   name: web-svc
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 spec:
   ports:
   - port: 80
