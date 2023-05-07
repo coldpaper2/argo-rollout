@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: nginx:1.17
+        image: httpd
         ports:
         - containerPort: 80
   revisionHistoryLimit: 3
